@@ -1,73 +1,215 @@
-# React + TypeScript + Vite
+# AI Creative Writer ✨
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An intelligent writing assistant powered by Groq's LLaMA 3.3 AI model. This application helps writers overcome creative blocks by seamlessly continuing their stories in the same style and tone.
 
-Currently, two official plugins are available:
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![React](https://img.shields.io/badge/React-18.x-61dafb.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)
+![Node.js](https://img.shields.io/badge/Node.js-18.x-green.svg)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌟 Features
 
-## React Compiler
+- **AI-Powered Continuation**: Uses Groq's LLaMA 3.3 70B model to continue your stories naturally
+- **Rich Text Editor**: Clean, distraction-free writing environment with a simple textarea interface
+- **Story Management**: Save, load, and organize multiple stories with timestamps
+- **Writing History**: Track all your user inputs and AI generations with a detailed history view
+- **Theme Support**: Choose between light, dark, or system theme modes
+- **Collapsible Sidebar**: Access your stories and history without cluttering the writing space
+- **Real-time Status**: Visual feedback during AI generation with animated loading states
+- **Local Storage**: All your stories and history are saved locally in your browser
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Getting Started
 
-## Expanding the ESLint configuration
+### Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Node.js 18.x or higher
+- npm or yarn
+- A Groq API key (get one at [console.groq.com](https://console.groq.com))
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Installation
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/ai-creative-writer.git
+   cd ai-creative-writer
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. **Install dependencies**
+   ```bash
+   # Install root dependencies
+   npm install
+
+   # Install server dependencies
+   cd server
+   npm install
+   cd ..
+   ```
+
+3. **Set up environment variables**
+
+   Create a `.env` file in the `server` directory:
+   ```env
+   GROQ_API_KEY=your_groq_api_key_here
+   PORT=3001
+   ```
+
+4. **Start the development servers**
+
+   In one terminal, start the backend server:
+   ```bash
+   cd server
+   npm start
+   ```
+
+   In another terminal, start the React frontend:
+   ```bash
+   npm run dev
+   ```
+
+5. **Open the application**
+
+   Navigate to `http://localhost:5173` (or the port shown in your terminal)
+
+## 🎯 Usage
+
+### Writing Your First Story
+
+1. Click on the editor and start typing your story
+2. When you need inspiration, click the **"✨ Continue Writing"** button
+3. The AI will analyze your text and generate a natural continuation
+4. The generated text will be automatically added to your editor
+
+### Managing Stories
+
+- **Save**: Click the **"💾 Save"** button to save your current work
+- **New Story**: Click **"✨ New Story"** in the sidebar to start fresh
+- **Load Story**: Click on any saved story in the sidebar to load it
+- **Delete Story**: Click the 🗑️ icon next to any story to remove it
+
+### Viewing History
+
+1. Switch to the **"🕐 History"** tab in the sidebar
+2. See all your past inputs and AI generations with timestamps
+3. Click **"🗑️ Clear History"** to remove all history entries
+
+### Clearing the Editor
+
+1. Click the **"🧹 Clear"** button once
+2. The button will change to **"⚠️ Click again to confirm"**
+3. Click again within 3 seconds to clear the editor
+
+## 🏗️ Project Structure
+
+```
+ai-creative-writer/
+├── src/
+│   ├── components/
+│   │   └── ProseMirrorEditor.tsx    # Text editor component
+│   ├── lib/
+│   │   ├── api.ts                   # API utility functions
+│   │   └── machines/
+│   │       └── aiMachine.ts         # XState machine for state management
+│   ├── App.tsx                      # Main application component
+│   ├── App.css                      # Application styles
+│   └── main.tsx                     # Application entry point
+├── server/
+│   └── index.js                     # Express server with Groq API proxy
+├── public/                          # Static assets
+└── package.json                     # Project dependencies
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠️ Tech Stack
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Frontend
+- **React 18** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **XState** - State machine management (prepared for future use)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Backend
+- **Node.js** - Runtime environment
+- **Express** - Web server framework
+- **CORS** - Cross-origin resource sharing
+- **dotenv** - Environment variable management
+
+### AI Integration
+- **Groq API** - Fast AI inference
+- **LLaMA 3.3 70B Versatile** - Language model
+
+## ⚙️ Configuration
+
+### Model Settings
+
+The AI uses these default settings (configurable in `App.tsx`):
+
+```javascript
+{
+  model: 'llama-3.3-70b-versatile',
+  max_tokens: 512,
+  temperature: 0.7
+}
 ```
+
+### API Endpoint
+
+The backend server proxies requests to Groq's API:
+- **Endpoint**: `http://localhost:3001/api/grok`
+- **Method**: POST
+- **Body**: `{ messages: ChatMessage[] }`
+
+## 🔒 Privacy & Data
+
+- All stories and history are stored **locally in your browser** using localStorage
+- No data is sent to any server except for AI generation requests
+- Your Groq API key is stored securely in server environment variables
+
+## 🐛 Troubleshooting
+
+### "Set GROQ_API_KEY in .env" Error
+- Make sure you've created a `.env` file in the `server` directory
+- Verify your API key is correct and has proper permissions
+
+### "HTTP error! status: 401"
+- Your API key may be invalid or expired
+- Check your Groq console for API key status
+
+### Stories Not Saving
+- Check browser console for localStorage errors
+- Ensure your browser allows localStorage
+- Try clearing browser cache and reloading
+
+### AI Generation Fails
+- Check that the backend server is running on port 3001
+- Verify network connectivity
+- Check server logs for detailed error messages
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [Groq](https://groq.com) for providing fast AI inference
+- [Meta](https://ai.meta.com) for the LLaMA model
+- The React and TypeScript communities
+
+## 📧 Support
+
+If you encounter any issues or have questions:
+- Open an issue on GitHub
+- Check the troubleshooting section above
+- Review Groq's documentation at [console.groq.com/docs](https://console.groq.com/docs)
+
+---
+
+**Made with ❤️ by developers who love creative writing**
